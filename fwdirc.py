@@ -8,7 +8,7 @@ import time
 
 class FwdIRC():
     def __init__(self, host="irc.freenode.net", port=6667,
-                        nick="gitirc", channels=["#rapidsms"]):
+                        nick="rapidsms-news", channels=["#rapidsms"]):
         self.host = host
         self.port = port
         self.nick = nick 
@@ -32,15 +32,14 @@ class FwdIRC():
         if self.message_waiting:
             while len(self.message_waiting) > 0:
                 msg = self.message_waiting.pop()
-            self.outgoing(msg)
-        self.irc.process_once(timeout=1.0)
+                self.outgoing(msg)
+                self.irc.process_once(timeout=5.0)
         time.sleep(30)
         self.run(gi)
         
     def outgoing (self, msg):
         channel = self.channels[0]
-        response = "%s" % (msg)
-        self.server.privmsg(channel, response)
+        self.server.privmsg(channel, msg)
 
 if __name__ == "__main__":
     #web.run(urls, globals())
