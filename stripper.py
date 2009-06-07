@@ -15,6 +15,9 @@ class HTMLStripper(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag.lower() == 'br':
             self._stripped.append('\n')
+        if tag.lower() == 'a':
+            #self._stripped.append(attrs[0][1])
+            pass
 
     def handle_charref(self, name):
         try:
