@@ -3,7 +3,7 @@
 
 feed_config = { 
     'name' : 'github', 
-    'url' : 'https://github.com/rapidsms.private.atom?token=1e5ad8f275bdd03a163488732863171f',
+    'url' : 'https://github.com/username.private.atom?token=apitoken',
     'snippet' : 'item.content[0].value',
     'format' : "'  %s  |  %s  |  %s  |  %s' % (item.link, item.title, compact_body, when)"
 }
