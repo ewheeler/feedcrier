@@ -6,30 +6,34 @@ import re
 import feedparser
 from stripper import *
 
+from config import *
+
 class Fetcher:
-    feed = 'https://github.com/rapidsms.private.atom?token=1e5ad8f275bdd03a163488732863171f'
     items = []
+
+    def __init__(self):
+       # TODO support multiple feeds
+       self.feed = feed_config 
 
     def tidy(self, item):
         ''' Returns a tidy unicode version of the desired information
-            from a feed item. You may need to customize this code, which
-            is meant for github newsfeeds. '''
-        # remove all html markup
-        body = stripHTML(item.content[0].value).strip().replace("&quot;", "\"")
+            from a feed item, as defined in config. ''' 
+        # remove all html markup from the portion of the item we are concerned with
+        body = stripHTML(eval(self.feed['snippet'])).strip().replace("&quot;", "\"")
         # replace many whitespaces with one space
         spaces = re.compile('\s+')
         compact_body = re.sub(spaces, " ", body)
         # make date readable
         when = strftime("%a, %d %b %Y %H:%M", item.published_parsed)
         # assemble a pretty string of nuggets from feed item
-        pretty = u'  %s  |  %s  |  %s  |  %s' % (item.link, item.title, compact_body, when)
+        pretty = unicode(eval(self.feed['format']))
         return pretty
 
     def fetch(self):
         ''' Parses feed and returns items not found in the 
             items list (i.e., returns new items)'''
         def fresh(i): return i not in self.items
-        return filter(fresh, feedparser.parse(self.feed).entries)
+        return filter(fresh, feedparser.parse(self.feed['url']).entries)
 
     def go(self):
         ''' Returns a list of tidy unicode representations of new feed items. '''
