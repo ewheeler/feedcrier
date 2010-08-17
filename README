@@ -1,0 +1,23 @@
+Python scripts for fetching, parsing, stripping HTML,
+splitting content into 160 character chunks,
+and posting content into IRC chatrooms.
+
+DEPENDENCIES
+
+% pip install python-irclib
+% pip install feedparser
+
+
+USAGE
+
+originally developed to forward github.com newsfeeds into an IRC room
+make a copy of the example config
+
+% cp config.py.example config.py
+
+edit the url with your username and API token 
+edit default parameters of the __init__ method in feedcrier.py to change IRC channel(s)
+
+run the script (also join the IRC channel so you can see what happens)
+
+% python feedcrier.py
